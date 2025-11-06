@@ -2,7 +2,7 @@ extends CharacterBody2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
 @export var max_health := 3
-@export var enemy_speed = 200
+@export var enemy_speed = 80
 var current_health := max_health
 
 func _ready() -> void:

@@ -5,6 +5,7 @@ extends Node2D
 @export var range := 150.0
 
 var enemies_in_range: Array = []
+var preview_mode: bool = false
 
 func _ready() -> void:
 	$RangeArea/CollisionShape2D.shape.radius = range
@@ -26,6 +27,9 @@ func _on_body_exited(body):
 	#shoot()
 
 func shoot():
+	if preview_mode:
+		return
+	
 	enemies_in_range = enemies_in_range.filter(func(e): #adjust array to remove dead enemies
 		return e.current_health > 0 and is_instance_valid(e)
 	)
