@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://7ql40a1irvn8"]
+
+[ext_resource type="Texture2D" uid="uid://cieyytnggfciu" path="res://assets/sprites/level.png" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://cwag6b2krmx3t" path="res://scenes/enemy.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://bqd5leyuv7j84" path="res://scripts/spawner.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cts3co4uofmfo" path="res://scenes/tower.tscn" id="4_jyhfs"]
+
+[sub_resource type="Curve2D" id="Curve2D_sugp2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -615, -340, -107.811, -25.289, 107.811, 25.289, -310, -204, 0, 0, 0, 0, -25, -162, -51.2996, -6.54274, 51.2996, 6.54274, 208, -154, -22.627, -50.578, 22.627, 50.578, 368, -94, 36.9474, -10.7763, -36.9474, 10.7763, 315, -10, 0, 0, 0, 0, 83, 36, 15.7776, -70.6236, -15.7776, 70.6236, -252, 127, -26.4463, -8.26446, 26.4463, 8.26446, -204, 239, 0, 0, 0, 0, 89, 292, -25.6198, -6.61157, 25.6198, 6.61157, 257, 317, 0, 0, 0, 0, 310, 344)
+}
+point_count = 12
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("path_2d")]
+script = ExtResource("2_sugp2")
+enemy_scene = ExtResource("2_0wfyh")
+path_2d = NodePath("Timer/Path2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Level" type="Sprite2D" parent="."]
+position = Vector2(-3, 1.49999)
+scale = Vector2(1.4475, 1.085)
+texture = ExtResource("1_o5qli")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="PathSpawner" type="Node2D" parent="Timer"]
+
+[node name="Path2D" type="Path2D" parent="Timer"]
+curve = SubResource("Curve2D_sugp2")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Timer/Path2D"]
+position = Vector2(-615, -340)
+rotation = 0.41944
+rotates = false
+loop = false
+
+[node name="enemy1" parent="Timer/Path2D/PathFollow2D" instance=ExtResource("2_0wfyh")]
+rotation = -0.478224
+
+[node name="Tower" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(-313, -125)
+
+[node name="Tower2" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(-72, -251)
+
+[node name="Tower3" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(269, 104)
+
+[node name="Tower4" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(364, -212)
+
+[node name="Tower5" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(-129, 172)
+
+[node name="Tower6" parent="." instance=ExtResource("4_jyhfs")]
+position = Vector2(-382, 132)

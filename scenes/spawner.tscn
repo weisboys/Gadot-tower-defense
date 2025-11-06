@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfclw6ls6eo6n"]
+
+[ext_resource type="PackedScene" uid="uid://cwag6b2krmx3t" path="res://scenes/enemy.tscn" id="1_2vbf6"]
+
+[sub_resource type="Curve2D" id="Curve2D_ik2nu"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -615, -340, -107.811, -25.289, 107.811, 25.289, -310, -204, 0, 0, 0, 0, -25, -162, -51.2996, -6.54274, 51.2996, 6.54274, 208, -154, -22.627, -50.578, 22.627, 50.578, 368, -94, 36.9474, -10.7763, -36.9474, 10.7763, 315, -10, 0, 0, 0, 0, 83, 36, 15.7776, -70.6236, -15.7776, 70.6236, -252, 127, -26.4463, -8.26446, 26.4463, 8.26446, -204, 239, 0, 0, 0, 0, 89, 292, -25.6198, -6.61157, 25.6198, 6.61157, 257, 317, 0, 0, 0, 0, 310, 344)
+}
+point_count = 12
+
+[node name="Spawner" type="Node2D"]
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="PathSpawner" type="Node2D" parent="Timer"]
+
+[node name="Path2D" type="Path2D" parent="Timer"]
+curve = SubResource("Curve2D_ik2nu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Timer/Path2D"]
+position = Vector2(-615, -340)
+rotation = 0.41944
+rotates = false
+loop = false
+
+[node name="enemy1" parent="Timer/Path2D/PathFollow2D" instance=ExtResource("1_2vbf6")]
+rotation = -0.478224
