@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var enemy_scene: PackedScene
-@export var spawn_interval := 0.5
+@export var spawn_interval := 0.2
 @export var path_2d: Path2D
 @export var wave_pause := 2.0
 var waves := [3, 6, 15, 8, 12, 15, 20, 15, 25, 20, 30]

@@ -26,6 +26,10 @@ func _on_body_exited(body):
 	#shoot()
 
 func shoot():
+	enemies_in_range = enemies_in_range.filter(func(e): #adjust array to remove dead enemies
+		return e.current_health > 0 and is_instance_valid(e)
+	)
+	
 	if enemies_in_range.size() == 0:
 		return
 	

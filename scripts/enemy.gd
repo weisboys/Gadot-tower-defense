@@ -1,9 +1,13 @@
 extends CharacterBody2D
+@onready var collision: CollisionShape2D = $CollisionShape2D
 
 @export var max_health := 3
-@export var enemy_speed = 100
+@export var enemy_speed = 200
 var current_health := max_health
 
+func _ready() -> void:
+	collision.disabled = false
+	
 func _process(delta):
 	var path_follow = get_parent()
 	if path_follow is PathFollow2D:
@@ -25,6 +29,7 @@ func flash_hit():
 	sprite.modulate = Color(1,1,1,1)
 	
 func die() -> void:
+	collision.disabled = true
 	var sprite = $EnemyTemp
 
 	var tween = create_tween()
