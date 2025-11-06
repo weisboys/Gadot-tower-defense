@@ -2,14 +2,12 @@ extends Area2D
 
 @export var speed := 400
 var target: Node = null
+var direction = Vector2()
+func _ready() -> void:
+	print("target found, point towards enemy")
+	direction = (target.global_position - global_position).normalized()
 
-func _process(delta: float) -> void:
-	if target == null or !is_instance_valid(target):
-		queue_free()
-		return
-	
-	var direction = (target.global_position - global_position).normalized()
-	
+func _process(delta: float) -> void:	
 	position += direction * speed * delta
 
 func _on_visibility_screen_exited() -> void:

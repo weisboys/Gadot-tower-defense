@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var max_health := 3
-@export var enemy_speed = 100
+@export var enemy_speed = 200
 var current_health := max_health
 
 func _process(delta):

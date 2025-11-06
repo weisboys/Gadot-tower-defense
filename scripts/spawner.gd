@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var enemy_scene: PackedScene
-@export var spawn_interval := 1.0
+@export var spawn_interval := 0.2
 @export var path_2d: Path2D
 
 func _ready():
