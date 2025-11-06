@@ -4,7 +4,8 @@ extends Area2D
 var target: Node = null
 
 func _process(delta: float) -> void:
-	if target == null:
+	if target == null or !is_instance_valid(target):
+		queue_free()
 		return
 	
 	var direction = (target.global_position - global_position).normalized()
@@ -18,4 +19,5 @@ func _on_visibility_screen_exited() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):
+		body.take_damage(1)
 		queue_free()
