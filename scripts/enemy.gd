@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var max_health := 3
-@export var enemy_speed = 200
+@export var enemy_speed = 100
 var current_health := max_health
 
 func _process(delta):
@@ -14,8 +14,22 @@ func _process(delta):
 
 func take_damage(amount: int) -> void:
 	current_health -= amount
+	flash_hit()
 	if current_health <= 0:
 		die()
-
+		
+func flash_hit():
+	var sprite = $EnemyTemp
+	sprite.modulate = Color(1,1,1,1) * 1.5
+	await get_tree().create_timer(0.1).timeout
+	sprite.modulate = Color(1,1,1,1)
+	
 func die() -> void:
+	var sprite = $EnemyTemp
+
+	var tween = create_tween()
+	tween.tween_property(sprite, "scale", Vector2(0, 0), 0.3)
+	tween.tween_property(sprite, "modulate:a", 0, 0.3)
+
+	await tween.finished
 	queue_free()

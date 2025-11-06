@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dm255wd8xgho6" path="res://scripts/enemy.gd" id="1_8e3ao"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8e3ao"]
-radius = 26.3059
+radius = 31.406
 
 [node name="enemy1" type="CharacterBody2D" groups=["enemies"]]
 scale = Vector2(0.639998, 0.64)
