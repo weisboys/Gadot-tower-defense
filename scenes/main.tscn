@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://7ql40a1irvn8"]
+[gd_scene load_steps=11 format=3 uid="uid://7ql40a1irvn8"]
 
 [ext_resource type="Texture2D" uid="uid://cieyytnggfciu" path="res://assets/sprites/level.png" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://cwag6b2krmx3t" path="res://scenes/enemy.tscn" id="2_0wfyh"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://0yef8qp18yl4" path="res://scenes/placement_controller.gd" id="5_tefeu"]
 [ext_resource type="Texture2D" uid="uid://cfoordp7qdkrx" path="res://assets/sprites/buttonTower1.png" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://dkf5f0ol83jte" path="res://scenes/buy_tower_button.gd" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://dn7e504813h1c" path="res://scenes/TowerSpot.tscn" id="9_85g3d"]
 
 [sub_resource type="Curve2D" id="Curve2D_sugp2"]
 _data = {
@@ -28,6 +29,38 @@ position = Vector2(-3, 1.49999)
 scale = Vector2(1.4475, 1.085)
 texture = ExtResource("1_o5qli")
 
+[node name="TowerSpots" type="Node" parent="."]
+
+[node name="TowerSpot" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(-291, -113)
+
+[node name="TowerSpot2" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(5, -231)
+
+[node name="TowerSpot3" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(193, -85)
+
+[node name="TowerSpot4" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(-113, 183)
+
+[node name="TowerSpot5" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(-375, 88)
+
+[node name="TowerSpot6" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(-351, 287)
+
+[node name="TowerSpot7" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(276, 207)
+
+[node name="TowerSpot8" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(457, 289)
+
+[node name="TowerSpot9" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(482, -147)
+
+[node name="TowerSpot10" parent="TowerSpots" instance=ExtResource("9_85g3d")]
+position = Vector2(447, 11)
+
 [node name="Timer (Paths)" type="Timer" parent="."]
 autostart = true
 
@@ -47,6 +80,9 @@ rotation = -0.478224
 
 [node name="PlacementController" type="Node2D" parent="."]
 script = ExtResource("5_tefeu")
+
+[node name="RayCast2D" type="RayCast2D" parent="PlacementController"]
+target_position = Vector2(0, 0)
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("5_tbgi4")

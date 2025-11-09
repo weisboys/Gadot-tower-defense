@@ -41,17 +41,13 @@ func _on_Timer_timeout():
 		start_wave()
 
 func spawn_enemy():
-	# Instance the enemy scene
 	var enemy = enemy_scene.instantiate() as Node2D
 
-	# Create a PathFollow2D so each enemy moves independently
 	var follower = PathFollow2D.new()
-	follower.rotates = false  # Do not rotate the enemy along the path
-	follower.loop = false     # Stop at the end
+	follower.rotates = false
+	follower.loop = false
 	follower.add_child(enemy)
 	enemy.rotation = 0
 
-	# Add the follower to the path
 	path_2d.add_child(follower)
 	follower.progress = 0.0
-	print("enemy spawned")
