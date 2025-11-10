@@ -12,7 +12,7 @@ var placing_scene: PackedScene = null
 func start_placement(packed_scene: PackedScene) -> void:
 	if is_placing:
 		return
-
+	
 	placing_scene = packed_scene
 	preview = placing_scene.instantiate() as Node2D
 	
@@ -21,6 +21,9 @@ func start_placement(packed_scene: PackedScene) -> void:
 	
 	if "modulate" in preview:
 		preview.modulate = Color(1, 1, 1, preview_alpha)
+	
+	preview.z_as_relative = false
+	preview.z_index = 100 #place in front
 	
 	add_child(preview)
 	is_placing = true
@@ -51,7 +54,7 @@ func try_place() -> void:
 	var result = space_state.intersect_point(query, 32) #32 = max resultss
 
 	if result.size() == 0:
-		print("Nothing hit")
+		print("nothing hit")
 		return
 
 	for hit in result:
@@ -60,7 +63,7 @@ func try_place() -> void:
 			var spot: TowerSpot = collider #specify type explicitly
 
 			if spot.occupied:
-				print("Spot already used")
+				print("spot already used")
 				return
 
 			#place tower
@@ -69,7 +72,7 @@ func try_place() -> void:
 			preview.modulate = Color(1,1,1,1)
 			preview.global_position = spot.global_position + TOWER_SPOT_OFFSET
 			get_tree().get_current_scene().add_child(preview)
-			preview.z_index = 100 #any large number
+			preview.z_index = 100 #place in front
 
 			#clear placement
 			preview = null
@@ -77,7 +80,7 @@ func try_place() -> void:
 			is_placing = false
 			return
 
-	print("Not a valid tower spot")
+	print("not a valid tower spot")
 
 #update preview position
 func _process(delta: float) -> void:
@@ -89,13 +92,61 @@ func _process(delta: float) -> void:
 
 #handle input
 func _unhandled_input(event: InputEvent) -> void:
-	if not is_placing:
+	if event is InputEventMouseButton and event.pressed:
+
+		if is_placing:
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				try_place()
+				get_viewport().set_input_as_handled()
+			elif event.button_index == MOUSE_BUTTON_RIGHT:
+				cancel_placement()
+				get_viewport().set_input_as_handled()
+			return
+
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			try_delete_tower()
+			get_viewport().set_input_as_handled()
+
+func try_delete_tower() -> void:
+	var mouse_pos = get_global_mouse_position()
+	var space_state = get_world_2d().direct_space_state
+
+	var query := PhysicsPointQueryParameters2D.new()
+	query.position = mouse_pos
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	query.collision_mask = 2  # clicking tower areas
+
+	var result = space_state.intersect_point(query, 8)
+
+	if result.size() == 0:
+		print("No tower clicked.")
 		return
 
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			try_place()
-			get_viewport().set_input_as_handled()
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			cancel_placement()
-			get_viewport().set_input_as_handled()
+	# The result.collider is your Area2D, not the tower
+	var area = result[0].collider
+	var tower = area.get_parent()
+
+	if tower == null:
+		print("Error: click area has no tower parent")
+		return
+
+	print("Deleting tower:", tower)
+
+	# Find the spot this tower is on
+	var spot_pos = tower.global_position - TOWER_SPOT_OFFSET
+
+	var query2 := PhysicsPointQueryParameters2D.new()
+	query2.position = spot_pos
+	query2.collide_with_areas = true
+	query2.collide_with_bodies = false
+	query2.collision_mask = 1  # TowerSpot layer
+
+	var spot_hit = space_state.intersect_point(query2, 4)
+
+	for s in spot_hit:
+		if s.collider is TowerSpot:
+			s.collider.occupied = false
+			break
+
+	tower.queue_free()

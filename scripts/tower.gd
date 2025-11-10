@@ -16,6 +16,11 @@ func _ready() -> void:
 	$ShootTimer.wait_time = fire_rate
 	$ShootTimer.timeout.connect(shoot)
 	$ShootTimer.start()
+	
+	if has_node("ClickArea"):
+		var click_area: Area2D = $ClickArea
+		click_area.collision_layer = 2 #layer for tower click
+		click_area.collision_mask = 0 #doesn't detect anything
 
 func _on_body_entered(body):
 	enemies_in_range.append(body)

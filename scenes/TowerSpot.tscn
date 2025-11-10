@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bha4jubdete22" path="res://assets/sprites/towerSpot.png" id="2_k3iwm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e4x56"]
-radius = 34.0527
+radius = 53.776
 
 [node name="TowerSpot" type="Area2D"]
 position = Vector2(1, -2)
