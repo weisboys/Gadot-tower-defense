@@ -3,7 +3,10 @@ extends CharacterBody2D
 
 @export var max_health := 3
 @export var enemy_speed = 80
+@export var coin_drop := 15
 var current_health := max_health
+
+signal died(coin_amount)
 
 func _ready() -> void:
 	collision.disabled = false
@@ -30,6 +33,7 @@ func flash_hit():
 	
 func die() -> void:
 	collision.disabled = true
+	emit_signal("died", coin_drop)
 	var sprite = $EnemyTemp
 
 	var tween = create_tween()

@@ -38,6 +38,11 @@ func cancel_placement() -> void:
 
 # attempt to place tower on a valid spot
 func try_place() -> void:
+	var gm = get_node("/root/Main/GameManager")
+	if not gm.spend_coins(preview.cost):
+		print("not enough coins")
+		return
+	
 	if not is_placing or preview == null:
 		return
 

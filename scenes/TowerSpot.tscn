@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dn7e504813h1c"]
 
-[ext_resource type="Script" uid="uid://bt54h557xhpn5" path="res://scenes/tower_spot.gd" id="1_ejd0k"]
+[ext_resource type="Script" uid="uid://bt54h557xhpn5" path="res://scripts/tower_spot.gd" id="1_ejd0k"]
 [ext_resource type="Texture2D" uid="uid://bha4jubdete22" path="res://assets/sprites/towerSpot.png" id="2_k3iwm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e4x56"]

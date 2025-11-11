@@ -3,6 +3,7 @@ extends Node2D
 @export var bullet_scene: PackedScene
 @export var fire_rate := 0.4
 @export var range := 150.0
+@export var cost := 100
 
 var enemies_in_range: Array = []
 var preview_mode: bool = false

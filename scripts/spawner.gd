@@ -51,3 +51,6 @@ func spawn_enemy():
 
 	path_2d.add_child(follower)
 	follower.progress = 0.0
+	
+	var gm = get_node("/root/Main/GameManager")
+	enemy.died.connect(gm.add_coins)
