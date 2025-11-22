@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @export var max_health := 3
 @export var enemy_speed = 80
-@export var coin_drop := 15
+@export var coin_drop := 10
 var current_health := max_health
 
 signal died(coin_amount)
@@ -17,7 +17,7 @@ func _process(delta):
 		path_follow.progress += delta * enemy_speed
 	if is_equal_approx(path_follow.progress_ratio, 1.0):
 		print("enemy at end")
-		path_follow.queue_free()
+		path_follow.queue_free() #delete enemy and its child path
 
 func take_damage(amount: int) -> void:
 	current_health -= amount

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://7ql40a1irvn8"]
+[gd_scene load_steps=11 format=3 uid="uid://7ql40a1irvn8"]
 
 [ext_resource type="Texture2D" uid="uid://cieyytnggfciu" path="res://assets/sprites/level.png" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://cwag6b2krmx3t" path="res://scenes/enemy.tscn" id="2_0wfyh"]
@@ -7,9 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cts3co4uofmfo" path="res://scenes/tower.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://bhptx05x3iub8" path="res://scripts/ui.gd" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://0yef8qp18yl4" path="res://scripts/placement_controller.gd" id="5_tefeu"]
-[ext_resource type="Texture2D" uid="uid://cfoordp7qdkrx" path="res://assets/sprites/buttonTower1.png" id="7_o6xl0"]
-[ext_resource type="Script" uid="uid://dkf5f0ol83jte" path="res://scripts/buy_tower_button.gd" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://dn7e504813h1c" path="res://scenes/TowerSpot.tscn" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://bgv4rjb34nvqq" path="res://scenes/BuyTowerButton.tscn" id="9_choun"]
 
 [sub_resource type="Curve2D" id="Curve2D_sugp2"]
 _data = {
@@ -21,6 +20,7 @@ point_count = 12
 script = ExtResource("2_sugp2")
 enemy_scene = ExtResource("2_0wfyh")
 path_2d = NodePath("Timer (Path)/Path2D")
+wave_pause = 4.0
 timer = NodePath("Timer (Path)")
 
 [node name="GameManager" type="Node" parent="."]
@@ -92,18 +92,8 @@ target_position = Vector2(0, 0)
 script = ExtResource("5_tbgi4")
 tower_scene = ExtResource("4_jyhfs")
 
-[node name="BuyTowerButton" type="TextureButton" parent="UI"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -447.0
-offset_right = 398.0
-grow_vertical = 0
-scale = Vector2(0.220232, 0.216842)
-tooltip_text = "Tower 1"
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("7_o6xl0")
-script = ExtResource("8_tipki")
+[node name="BuyTowerButton" parent="UI" instance=ExtResource("9_choun")]
+tower_scene = ExtResource("4_jyhfs")
 
 [node name="CoinLabel" type="Label" parent="UI"]
 anchors_preset = 2
@@ -116,7 +106,3 @@ theme_override_colors/font_color = Color(0.886275, 0.788235, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
-
-[connection signal="mouse_entered" from="UI/BuyTowerButton" to="UI/BuyTowerButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="UI/BuyTowerButton" to="UI/BuyTowerButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="UI/BuyTowerButton" to="UI/BuyTowerButton" method="_on_pressed"]

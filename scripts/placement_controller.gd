@@ -39,9 +39,6 @@ func cancel_placement() -> void:
 # attempt to place tower on a valid spot
 func try_place() -> void:
 	var gm = get_node("/root/Main/GameManager")
-	if not gm.spend_coins(preview.cost):
-		print("not enough coins")
-		return
 	
 	if not is_placing or preview == null:
 		return
@@ -56,7 +53,7 @@ func try_place() -> void:
 	query.collide_with_bodies = false  #only need Area2D spots
 	query.collision_mask = 0xFFFFFFFF  #all layers
 
-	var result = space_state.intersect_point(query, 32) #32 = max resultss
+	var result = space_state.intersect_point(query, 32) #32 = max results
 
 	if result.size() == 0:
 		print("nothing hit")
@@ -70,7 +67,11 @@ func try_place() -> void:
 			if spot.occupied:
 				print("spot already used")
 				return
-
+			
+			if not gm.spend_coins(preview.cost):
+				print("not enough coins")
+				return
+			
 			#place tower
 			spot.occupied = true
 			preview.preview_mode = false

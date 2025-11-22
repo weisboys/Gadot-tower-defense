@@ -1,12 +1,13 @@
 extends CanvasLayer
 
 @onready var coin_label: Label = $CoinLabel
+@onready var tower_button = $BuyTowerButton
 
 @export var tower_scene: PackedScene
 @export var placement_controller_path: NodePath = NodePath("../PlacementController")
 
 func _ready() -> void:
-	$BuyTowerButton.pressed.connect(_on_buy_pressed)
+	tower_button.pressed.connect(_on_buy_pressed)
 
 	var gm = get_node("/root/Main/GameManager")
 	coin_label.text = str(gm.coins)
