@@ -15,7 +15,6 @@ tooltip_text = "Tower 1"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_8fcu8")
 script = ExtResource("2_50rvj")
-tower_scene = null
 
 [node name="CostLabel" type="Label" parent="."]
 layout_mode = 0

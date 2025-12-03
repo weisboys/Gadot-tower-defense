@@ -17,6 +17,8 @@ func _process(delta):
 		path_follow.progress += delta * enemy_speed
 	if is_equal_approx(path_follow.progress_ratio, 1.0):
 		print("enemy at end")
+		var gm = get_node("/root/Main/GameManager")
+		gm.lose_life()
 		path_follow.queue_free() #delete enemy and its child path
 
 func take_damage(amount: int) -> void:
