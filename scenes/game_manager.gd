@@ -6,7 +6,10 @@ var lives := 0
 
 signal coins_changed(new_amount)
 signal lives_changed(new_lives_amount)
+signal enemy_leaked()
 signal game_over
+
+var is_game_over: bool = false
 
 func _ready():
 	lives = starting_lives
@@ -24,7 +27,12 @@ func spend_coins(amount: int) -> bool:
 	return false
 
 func lose_life():
+	if is_game_over:
+		return
+	
 	lives -= 1
 	emit_signal("lives_changed", lives)
+	emit_signal("enemy_leaked")
 	if lives <= 0:
+		is_game_over = true
 		emit_signal("game_over")

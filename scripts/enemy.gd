@@ -19,7 +19,7 @@ func _process(delta):
 		print("enemy at end")
 		var gm = get_node("/root/Main/GameManager")
 		gm.lose_life()
-		path_follow.queue_free() #delete enemy and its child path
+		path_follow.call_deferred("queue_free") #delete enemy and its child path
 
 func take_damage(amount: int) -> void:
 	current_health -= amount

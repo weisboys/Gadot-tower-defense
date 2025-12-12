@@ -10,9 +10,12 @@ var placing_scene: PackedScene = null
 
 # start placing a new tower
 func start_placement(packed_scene: PackedScene) -> void:
+	var gm = get_node("/root/Main/GameManager")
+	if gm.is_game_over:
+		return
 	if is_placing:
 		return
-	
+
 	placing_scene = packed_scene
 	preview = placing_scene.instantiate() as Node2D
 	
@@ -40,7 +43,7 @@ func cancel_placement() -> void:
 func try_place() -> void:
 	var gm = get_node("/root/Main/GameManager")
 	
-	if not is_placing or preview == null:
+	if not is_placing or preview == null or gm.is_game_over:
 		return
 
 	var mouse_pos: Vector2 = get_global_mouse_position()
