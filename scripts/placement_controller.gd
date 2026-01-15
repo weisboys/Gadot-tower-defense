@@ -69,10 +69,12 @@ func try_place() -> void:
 
 			if spot.occupied:
 				print("spot already used")
+				flash_invalid()
 				return
 			
 			if not gm.spend_coins(preview.cost):
 				print("not enough coins")
+				flash_invalid()
 				return
 			
 			#place tower
@@ -90,6 +92,7 @@ func try_place() -> void:
 			return
 
 	print("not a valid tower spot")
+	flash_invalid()
 
 #update preview position
 func _process(delta: float) -> void:
@@ -159,3 +162,8 @@ func try_delete_tower() -> void:
 			break
 
 	tower.queue_free()
+
+func flash_invalid() -> void:
+	preview.modulate = Color(245,1,1,1)
+	await get_tree().create_timer(0.1).timeout
+	preview.modulate = Color(1, 1, 1, preview_alpha)
