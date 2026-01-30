@@ -84,7 +84,14 @@ func try_place() -> void:
 			preview.global_position = spot.global_position + TOWER_SPOT_OFFSET
 			get_tree().get_current_scene().add_child(preview)
 			preview.z_index = 100 #place in front
-
+			#visual effect
+			var final_scale: Vector2 = preview.scale
+			preview.scale = final_scale * 0.2
+			var tween := create_tween()
+			#below and next two lines is an example of method chaining in Gadot
+			tween.tween_property(preview, "scale", final_scale, 0.18)\
+			.set_trans(Tween.TRANS_BACK)\
+			.set_ease(Tween.EASE_OUT)
 			#clear placement
 			preview = null
 			placing_scene = null
@@ -99,7 +106,7 @@ func _process(delta: float) -> void:
 	if not is_placing or preview == null:
 		return
 
-	# Follow mouse
+	#follow mouse
 	preview.global_position = get_global_mouse_position()
 
 #handle input
@@ -132,20 +139,20 @@ func try_delete_tower() -> void:
 	var result = space_state.intersect_point(query, 8)
 
 	if result.size() == 0:
-		print("No tower clicked.")
+		print("no tower clicked.")
 		return
 
-	# The result.collider is your Area2D, not the tower
+	#result.collider is Area2D, not tower
 	var area = result[0].collider
 	var tower = area.get_parent()
 
 	if tower == null:
-		print("Error: click area has no tower parent")
+		print("error: click area has no tower parent")
 		return
 
-	print("Deleting tower:", tower)
+	print("deleting tower:", tower)
 
-	# Find the spot this tower is on
+	#find the spot this tower is on
 	var spot_pos = tower.global_position - TOWER_SPOT_OFFSET
 
 	var query2 := PhysicsPointQueryParameters2D.new()
@@ -160,8 +167,12 @@ func try_delete_tower() -> void:
 		if s.collider is TowerSpot:
 			s.collider.occupied = false
 			break
-
-	tower.queue_free()
+	var tween := create_tween()
+	tween.tween_property(tower, "scale", Vector2(1.2, 1.2), 0.08)
+	tween.tween_property(tower, "scale", Vector2.ZERO, 0.12)
+	tween.finished.connect(func():
+		tower.queue_free()
+	)
 
 func flash_invalid() -> void:
 	preview.modulate = Color(245,1,1,1)
