@@ -9,6 +9,8 @@ extends CanvasLayer
 @export var tower_scene: PackedScene
 @export var placement_controller_path: NodePath = NodePath("../PlacementController")
 
+var flash_tween: Tween
+
 func _ready() -> void:
 	tower_button.pressed.connect(_on_buy_pressed)
 
@@ -34,12 +36,15 @@ func _on_lives_changed(value: int):
 	lives_label.text = str(value)
 
 func _on_enemy_leaked() -> void:
+	if flash_tween:
+		flash_tween.kill()
+	
 	var c: Color = screen_flash.modulate
 	c.a = 0.6
 	screen_flash.modulate = c
 	
-	var t = create_tween()
-	t.tween_property(screen_flash, "modulate:a", 0, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	flash_tween = create_tween()
+	flash_tween.tween_property(screen_flash, "modulate:a", 0, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _on_game_over() -> void:
 	gameover_label.visible = true
