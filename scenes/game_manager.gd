@@ -1,7 +1,7 @@
 extends Node
 
 var coins: int = 200
-@export var starting_lives := 10
+@export var starting_lives := 1
 var lives := 0
 
 signal coins_changed(new_amount)
